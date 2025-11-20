@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>User Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/signup.css">
+  <style>
+    
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="card p-4 mx-auto" style="max-width: 450px;">
+    <h3 class="text-center text-primary mb-4">Create an Account</h3>
+
+    <% if (typeof error !== 'undefined') { %>
+      <div class="alert alert-danger text-center"><%= error %></div>
+    <% } %>
+
+    <form id="signupForm" action="/signup" method="POST" novalidate>
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Full Name</label>
+        <input type="text" name="name" id="name" class="form-control" placeholder="Enter your full name">
+        <div id="nameError" class="error-text">Please enter your full name.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Email Address</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Enter your email">
+        <div id="emailError" class="error-text">Please enter a valid email address.</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Enter a password (min 6 chars)">
+        <div id="passwordError" class="error-text">Password must be at least 6 characters long.</div>
+      </div>
+
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">Sign Up</button>
+      </div>
+
+      <div class="text-center mt-3">
+        <a href="/login" class="text-decoration-none text-muted">Already have an account? <strong>Login</strong></a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/signup.js"></script>
+
+</body>
+</html>

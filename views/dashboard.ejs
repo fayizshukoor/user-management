@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-dark shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+      <span class="navbar-brand mb-0 h1 fs-4">Admin Dashboard</span>
+      <a href="/admin/logout" class="btn btn-outline-light btn-sm px-3">Logout</a>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="container table-container">
+    <div class="admin-card">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3 class="text-primary fw-bold">User Management</h3>
+        <a href="/admin/add-user" class="btn btn-success px-3">+ Add New User</a>
+      </div>
+
+     <% if (success && success.length > 0) { %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= success[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if (error && error.length > 0) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+
+      <!-- Search Bar -->
+      <form class="d-flex search-box mb-3" method="GET" action="/admin/dashboard">
+        <input 
+          type="text" 
+          name="search" 
+          class="form-control me-2" 
+          placeholder="Search by name or email..."
+          value="<%= typeof search !== 'undefined' ? search : '' %>"
+        >
+        <button type="submit" class="btn btn-primary me-2">Search</button>
+        <% if (search) { %>
+          <a href="/admin/dashboard" class="btn btn-outline-secondary">Clear</a>
+        <% } %>
+      </form>
+
+      <!-- Users Table -->
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover align-middle text-center shadow-sm">
+          <thead>
+            <tr>
+              <th style="width: 60px;">#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th style="width: 180px;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (users && users.length > 0) { %>
+              <% users.forEach((user, index) => { %>
+                <tr>
+                  <td><%= index + 1 %></td>
+                  <td class="fw-semibold"><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td>
+                    <span class="badge bg-<%= user.role === 'admin' ? 'success' : 'dark' %> px-3 py-2 text-capitalize">
+                      <%= user.role %>
+                    </span>
+                  </td>
+                  <td>
+                    <a href="/admin/edit/<%= user._id %>" class="btn btn-warning btn-sm me-1">Edit</a>
+                    
+
+                      <form action="/admin/delete/<%= user._id %>" method="POST" style="display:inline;" class="delete-form">
+
+                       <button type="button" class="btn btn-danger btn-sm delete-btn"data-id="<%= user._id %>"data-name="<%= user.name %>">Delete</button>
+
+                    </form>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td colspan="5" class="text-center text-muted py-4">No users found.</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+ <!-- Delete Confirmation -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <p class="fw-semibold">Are you sure you want to delete this user?</p>
+        <p id="userName" class="text-muted"></p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+        <!-- Form that submits delete request -->
+        <form id="modalDeleteForm" method="POST">
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src = "/js/dashboard.js"></script>
+</body>
+</html>
