@@ -24,7 +24,7 @@ app.use(session({
     mongoUrl:process.env.MONGODB_URI,
     collectionName:"sessions",
     ttl:24*60*60,
-    autoRemove:"native"
+    autoRemove:"native" 
   }),
   cookie:{
     maxAge:1000*60*60*24,

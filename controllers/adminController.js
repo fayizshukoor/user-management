@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
-// const { search } = require("../routes/adminRouter");
+
 
 exports.showLogin = (req,res)=>{
     if(req.session.user){
