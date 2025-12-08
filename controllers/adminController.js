@@ -211,7 +211,7 @@ exports.deleteUser = async(req,res)=>{
         req.flash("success","User deleted successfully")
         res.redirect('/admin/dashboard');
     }catch(err){
-        console.error("Error deleting user",err);
+        console.error("Error deleting user");
         req.flash("error","Something went wrong")
          res.redirect('/admin/dashboard');
     }

@@ -6,11 +6,11 @@
     }, 3000);
 
  
-    window.addEventListener("pageshow", function (event) {
-      if (event.persisted || window.performance.navigation.type === 2) {
-        window.location.reload();
-      }
-    });
+    // window.addEventListener("pageshow", function (event) {
+    //   if (event.persisted || window.performance.navigation.type === 2) {
+    //     window.location.reload();
+    //   }
+    // });
 
     document.addEventListener("DOMContentLoaded", () => {
   const deleteButtons = document.querySelectorAll(".delete-btn");
